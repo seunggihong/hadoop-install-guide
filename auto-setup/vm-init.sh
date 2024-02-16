@@ -7,7 +7,8 @@ read -p "|               NIC name: " nic_name
 sudo apt-get update
 sudo apt-get upgrade
 
-# Install openjdk, python
+# Install openjdk, python, net-tools
+sudo apt install net-tools
 sudo apt install openjdk-8-jdk
 sudo apt install python3-pip
 

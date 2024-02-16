@@ -1,10 +1,7 @@
 ![Static Badge](https://img.shields.io/badge/hadoop-3.3.6-%2366CCFF?style=flat-square&logo=apachehadoop&labelColor=white)
 ![Static Badge](https://img.shields.io/badge/OpenJDK-1.8.0-%23437291?style=flat-square&logo=openjdk&labelColor=white)
 ![Static Badge](https://img.shields.io/badge/VirtualBox-7.0.10-%23183A61?style=flat-square&logo=virtualbox&logoColor=%23183A61&labelColor=white)
-
-
-
-
+![Static Badge](https://img.shields.io/badge/Ubuntu-22.04-%23E95420?style=flat-square&logo=ubuntu&labelColor=white)
 
 # ***Hadoop install Guide***
 This repo is, describes how to build a `Hadoop` eco system using the `Oracle virtual machine`.

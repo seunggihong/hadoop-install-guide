@@ -70,7 +70,8 @@ network:
         enp0s3:
             addresses:
                 - 192.168.1.10/24
-            nameservers: [8.8.8.8, 8.8.4.4]
+            nameservers: 
+                addresses: [8.8.8.8, 8.8.4.4]
             routes:
                 - to: default
                   via: 192.168.1.1

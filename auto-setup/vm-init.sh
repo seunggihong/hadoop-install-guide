@@ -25,12 +25,12 @@ network:
     $nic_name:
         addresses:
             - $ip_address/24
-        nameservers: [8.8.8.8, 8.8.4,4]
-        routes
+        nameservers: 
+            addresses: [8.8.8.8, 8.8.4.4]
+        routes:
             - to: default
               via: $new_ip
-  version: 2
-EOF" | sudo tee /etc/netplan/00-installer-config.yaml > /dev/null
+  version: 2" | sudo tee /etc/netplan/00-installer-config.yaml > /dev/null
 
 echo "-----------------------------------------------------------------"
 echo "-----------------------------Result------------------------------"

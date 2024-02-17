@@ -197,8 +197,8 @@ $ sudo vi ~/.bashrc
 
 # .bashrc
 ...
-export JAVA_HOME=/usr/lib/jvm/default-java/
-export HADOOP_HOME=/home/master/hadoop
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_HOME=/home/master-node/hadoop
 export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 export HADOOP_CLASSPATH=${JAVA_HOME}/lib/tools.jar
 # :wq!
@@ -223,11 +223,11 @@ Setting `core-site.xml`, `yarn-site.xml`, `hdfs-site.xml`
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://master:9000</value>
+        <value>hdfs://master-node:9000</value>
     </property>
     <property>
         <name>hadoop.tmp.dir</name>
-        <value>/home/master/data/tmp</value>
+        <value>/home/master-node/data/tmp</value>
     </property>
 </configration>
 ```
@@ -240,7 +240,7 @@ Setting `core-site.xml`, `yarn-site.xml`, `hdfs-site.xml`
 <configuration>
     <property>
         <name>yarn.resourcemanager.hostname</name>
-        <value>master</value>
+        <value>master-node</value>
     </property>
 </configration>
 ```
@@ -266,7 +266,7 @@ Setting `core-site.xml`, `yarn-site.xml`, `hdfs-site.xml`
     </property>
     <property>
         <name>dfs.namenode.name.dir</name>
-        <value>/home/master/data/namenode</value>
+        <value>/home/master-node/data/namenode</value>
     </property>
 </configration>
 ```
@@ -280,7 +280,7 @@ Setting `core-site.xml`, `yarn-site.xml`, `hdfs-site.xml`
     </property>
     <property>
         <name>dfs.datanode.data.dir</name>
-        <value>/home/master/data/datanode</value>
+        <value>/home/master-node/data/datanode</value>
     </property>
 </configration>
 ```
@@ -326,4 +326,40 @@ Next Step is install `SPARK`!
 
 ## 4. Install SPARK
 
-__COMMING SOON__
+```bash
+$ wget https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+$ tar -xvf spark-3.5.0-bin-hadoop3.tgz
+$ mv spark-3.5.0-bin-hadoop3 spark
+```
+
+`~/.bashrc` file.
+```bash
+...
+export SPARK_HOME=/home/master-node/spark
+export PYTHONPATH=$SPARK_HOME/python/lib/pyspark.zip:$SPARK_HOME/python/lib/py4j-0.10.9.7-src.zip
+export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
+```
+
+```bash
+# master-node
+$ cp spark/conf/spark-defaults.conf.template spark/conf/spark-defaults.conf
+$ vi spark/conf/spark-defaults.conf
+```
+```bash
+# master-node
+...
+spark.master                     yarn
+spark.eventLog.enabled           true
+spark.eventLog.dir               file://home/master-node/spark/sparkeventlog
+spark.serializer                 org.apache.spark.serializer.KryoSerializer
+spark.driver.memory              512m
+spark.yarn.am.memory             256m
+```
+
+```bash
+# master-node
+$ mkdir spark/sparkeventlog
+$ sudo ln -s /usr/bin/python3 /usr/bin/python
+```

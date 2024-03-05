@@ -6,6 +6,8 @@
 # ***Hadoop install Guide***
 This repo is, describes how to build a `Hadoop` eco system using the `Oracle virtual machine`.
 
+- ### ***[KOR language 👈](https://github.com/seunggihong/hadoop-install-guide/tree/main/KR)***
+
 ## __Contents__
 ### 1. ***[Setting VM](#setting)***
 ### 2. ***[Install Hadoop](#install)***

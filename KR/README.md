@@ -326,6 +326,7 @@ $ jps
 ```
 
 ### ***드디어 우리는 하둡을 사용할 수 있습니다!!*** 🔥🔥🔥🔥🔥 
+
 ```bash
 $ hdfs dfs -mkdir /test
 $ hdfs dfs -ls /
@@ -347,6 +348,7 @@ $ mv spark-3.5.0-bin-hadoop3 spark
 ```
 
 `~/.bashrc` file.
+
 ```bash
 ...
 export SPARK_HOME=/home/master-node/spark

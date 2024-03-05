@@ -8,6 +8,8 @@ This repo is, describes how to build a `Hadoop` eco system using the `Oracle vir
 
 - ### ***[KOR language 👈](https://github.com/seunggihong/hadoop-install-guide/tree/main/KR)***
 
+- ### ***[Auto Setup](https://github.com/seunggihong/hadoop-install-guide/tree/main/auto-setup)*** - Comming soon -
+
 ## __Contents__
 ### 1. ***[Setting VM](#setting)***
 ### 2. ***[Install Hadoop](#install)***

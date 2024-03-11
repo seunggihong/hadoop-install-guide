@@ -1,0 +1,12 @@
+
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://master-node:9000</value>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/home/master-node/data/tmp</value>
+    </property>
+</configration>
+

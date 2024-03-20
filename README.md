@@ -1,7 +1,9 @@
 ![Static Badge](https://img.shields.io/badge/hadoop-3.3.6-%2366CCFF?style=flat-square&logo=apachehadoop&labelColor=white)
+![Static Badge](https://img.shields.io/badge/spark-3.5.0-%23E25A1C?style=flat-square&logo=apachespark&logoColor=%23E25A1C&labelColor=white)
 ![Static Badge](https://img.shields.io/badge/OpenJDK-1.8.0-%23437291?style=flat-square&logo=openjdk&labelColor=white)
 ![Static Badge](https://img.shields.io/badge/VirtualBox-7.0.10-%23183A61?style=flat-square&logo=virtualbox&logoColor=%23183A61&labelColor=white)
 ![Static Badge](https://img.shields.io/badge/Ubuntu-22.04-%23E95420?style=flat-square&logo=ubuntu&labelColor=white)
+
 
 # ***Hadoop install Guide***
 This repo is, describes how to build a `Hadoop` eco system using the `Oracle virtual machine`.
@@ -15,7 +17,7 @@ This repo is, describes how to build a `Hadoop` eco system using the `Oracle vir
 ### 2. ***[Install Hadoop](#install)***
 ### 3. ***[Test HDFS](#test)***
 ### 4. ***[Install SPARK](#spark)***
-
+### 5. ***[Error](#error)***
 
 
 <a name='setting'></a>
@@ -330,40 +332,84 @@ Next Step is install `SPARK`!
 
 ## 4. Install SPARK
 
+
+Download spark.
+
+This time is only master-node.
+
 ```bash
 $ wget https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
 $ tar -xvf spark-3.5.0-bin-hadoop3.tgz
 $ mv spark-3.5.0-bin-hadoop3 spark
 ```
 
-`~/.bashrc` file.
+Edit `~/.bashrc` file.
 ```bash
 ...
-export SPARK_HOME=/home/master-node/spark
-export PYTHONPATH=$SPARK_HOME/python/lib/pyspark.zip:$SPARK_HOME/python/lib/py4j-0.10.9.7-src.zip
-export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
-export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
+export SPARK_HOME=/home/master/spark
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+```
+Apply
+```bash
+$ source ~/.bashrc
 ```
 
+Configure Spark cluster.
+
 ```bash
-# master-node
-$ cp spark/conf/spark-defaults.conf.template spark/conf/spark-defaults.conf
-$ vi spark/conf/spark-defaults.conf
+$ cd $SPARK_HOME/conf
+$ cp spark-env.sh.template spark-env.sh
+$ vi spark-env.sh
 ```
+
+Edit `spark/conf/spark-env.sh`file.
 ```bash
-# master-node
 ...
-spark.master                     yarn
-spark.eventLog.enabled           true
-spark.eventLog.dir               file://home/master-node/spark/sparkeventlog
-spark.serializer                 org.apache.spark.serializer.KryoSerializer
-spark.driver.memory              512m
-spark.yarn.am.memory             256m
+export SPARK_MASTER_HOST=master
+export SPARK_MASTER_PORT=7077
+export SPARK_WORKER_CORES=2
+export SPARK_WORKER_MEMORY=4g
+export SPARK_WORKER_INSTANCES=1
+
+export JAVA_HOME=${JAVA_HOME}
+export HADOOP_HOME=${HADOOP_HOME}
+export YARN_CONF_DIR=${YARN_CONF_DIR}
+export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/etc/hadoop"}
 ```
 
+Worker settings
 ```bash
-# master-node
-$ mkdir spark/sparkeventlog
-$ sudo ln -s /usr/bin/python3 /usr/bin/python
+$ vi ~/spark/conf/slaves
 ```
+
+New file `slaves`
+```
+worker-node1
+worker-node2
+worker-node3
+
+```
+
+Now send it to each worker node.
+```bash
+$ scp -r spark master@worker-node1:/home/master/
+$ scp -r spark master@worker-node2:/home/master/
+$ scp -r spark master@worker-node3:/home/master/
+```
+
+Now let’s start the spark cluster.
+```bash
+$ ~/spark/sbin/start-all.sh
+$ ~/spark/sbin/start-history-server.sh
+```
+
+How to stop spark cluster.
+
+```bash
+$ ~/spark/sbin/stop-all.sh
+$ ~/spark/sbin/stop-history-server.sh
+```
+
+<a name='error'></a>
+
+## 5. Error
